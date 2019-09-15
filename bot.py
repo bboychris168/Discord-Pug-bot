@@ -51,18 +51,23 @@ async def on_message(message):
     global teamOne
     global teamTwo
     global pickNum
-    
+
 
     #extract the author from the message
     author = message.author
 
     #make sure they're using the bot setup channel
     #if(message.channel.id != myToken.setupChannelId):
-    if (message.channel.name != "💥ready-room💥" and message.content.lower() == ".r"): #or message.content.lower() == ".stop"):
+    if (message.channel.name != "💥ready-room💥" and message.content.lower() == ".r"):
         embed = discord.Embed(description="**Please use the**" "💥ready-room💥" "**channel!**", color=0x03f0fc)
         await message.channel.send(embed=embed)
         await message.delete(delay=0) 
         #if they aren't using an appropriate channel, return
+
+    if (message.channel.name != "💥ready-room💥" and message.content.lower() == ".stop"):
+        embed = discord.Embed(description="**Please use the**" "💥ready-room💥" "**channel!**", color=0x03f0fc)
+        await message.channel.send(embed=embed)
+        await message.delete(delay=0) 
         return
 
     if (message.content.lower() == "!retakes" or message.content.lower() == "!retake" or message.content.lower() == ".retakes" or message.content.lower() == ".retake"):
@@ -77,7 +82,7 @@ async def on_message(message):
         await message.channel.send(embed=embed)
 
     #ready command
-    if (message.content == '!gaben' or message.content.lower() == '.r') and inProgress == False and len(readyUsers) < 10:        
+    if (message.content == '.ready' or message.content.lower() == '.r') and inProgress == False and len(readyUsers) < 10:        
         #check if they are already ready
         #if (False):    #use this line to test full flow of the bot.
         if(author in readyUsers):   #comment out this line to test full flow of the bot.
@@ -149,13 +154,18 @@ async def on_message(message):
 
             #check if we're done picking
             if (pickNum == 9):
+                embed = discord.Embed(color=0xff0000)
+                embed.set_footer(text="Server is now loading. Please wait about 20 seconds for server to start!", icon_url="https://cdn.dribbble.com/users/46633/screenshots/1185889/civchoice-loading-gifs800x600.gif")
+                await message.channel.send(embed=embed)
+                await asyncio.sleep(20)
+
                 embed = discord.Embed(description=''' **Console connect:** \n `connect 139.99.144.30:28448; password t27D9M`
 
                 **Team** 🔵CT \n ''' + " \n ".join(sorted(str(x.name) for x in teamOne)) + '''
                 
                 **Team** 🔴T \n ''' + " \n ".join(sorted(str(x.name) for x in teamTwo)) + '''
                 **\n Pick maps when joined into server**''', color=0x33ff00)
-                embed.set_footer(text="Server is now loading. Please wait about 20 seconds for server to start!", icon_url="https://cdn.dribbble.com/users/46633/screenshots/1185889/civchoice-loading-gifs800x600.gif")
+                embed.set_footer(text="Server has now started!", icon_url="https://cdn.dribbble.com/users/46633/screenshots/1185889/civchoice-loading-gifs800x600.gif")
                 deleteAll = await message.channel.send(embed=embed)
                 #starts dathost server
                 await dathost.start(myToken.serverId)
@@ -187,7 +197,7 @@ async def on_message(message):
 
             pickedUser = message.mentions[0]
             teamTwo.append(pickedUser)
-            
+
             #move him to voice channel for team 2
             await pickedUser.move_to(team2VoiceChannel)
 
@@ -207,14 +217,15 @@ async def on_message(message):
         return
 
     #unready command               
-    elif (message.content.lower() == '.unready' or message.content == '!ungaben' and inProgress == False):
+    elif (message.content.lower() == '.unready' or message.content.lower() == '.ur' and inProgress == False):
         #make sure the user exists
         for user in readyUsers:
             if user == author:
                 readyUsers.remove(user)
                 #unready message
                 embed = discord.Embed(description=author.mention + "**Is no longer ready. We need** " + str(10 - len(readyUsers)) + " **more!**", color=0xff0000)
-                await message.channel.send(embed=embed)            
+                await message.channel.send(embed=embed)
+                await message.delete(delay=0)            
                 break
         return
 
