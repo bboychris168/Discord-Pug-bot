@@ -58,12 +58,23 @@ async def on_message(message):
 
     #make sure they're using the bot setup channel
     #if(message.channel.id != myToken.setupChannelId):
-    if (message.channel.name != "💥ready-room💥" and message.content.lower() == ".r"):
+    if (message.channel.name != "💥ready-room💥" and message.content.lower() == ".r"): #or message.content.lower() == ".stop"):
         embed = discord.Embed(description="**Please use the**" "💥ready-room💥" "**channel!**", color=0x03f0fc)
         await message.channel.send(embed=embed)
         await message.delete(delay=0) 
         #if they aren't using an appropriate channel, return
         return
+
+    if (message.content.lower() == "!retakes" or message.content.lower() == "!retake" or message.content.lower() == ".retakes" or message.content.lower() == ".retake"):
+        embed = discord.Embed(color=0xff9e0d)
+        embed.set_footer(text="Retake server is now loading. Please wait about 20 seconds for server to start!", icon_url="https://cdn.dribbble.com/users/46633/screenshots/1185889/civchoice-loading-gifs800x600.gif")
+        await message.channel.send(embed=embed)
+        await message.delete(delay=0)
+        await dathost.start(myToken.retakeId)
+        await asyncio.sleep(20)
+        embed = discord.Embed(description="**Console connect:** \n `connect 139.99.144.30:28023` \n\n **Server commands:** \n `!ws`  `!knife`  `!gloves`", color=0xff9e0d)
+        embed.set_footer(text="Retake server has now started!", icon_url="https://cdn.dribbble.com/users/46633/screenshots/1185889/civchoice-loading-gifs800x600.gif")
+        await message.channel.send(embed=embed)
 
     #ready command
     if (message.content == '!gaben' or message.content.lower() == '.r') and inProgress == False and len(readyUsers) < 10:        
