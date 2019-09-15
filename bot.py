@@ -100,7 +100,7 @@ async def on_message(message):
                 embed = discord.Embed(description="🔵" + firstCaptain.mention + "**it is now your pick, pick with `.pick @user`.** \n **Players:** \n" + " \n ".join(str(x.mention) for x in readyUsers), color=0x03f0fc)
                 await message.channel.send(embed=embed)
                 await message.delete(delay=0)
-            
+
             elif(len(readyUsers) != 0):
                 embed = discord.Embed(description=author.mention + "**is now ready, we need **" + str(10 - len(readyUsers)) + " **more**", color=0x03f0fc)
                 await message.channel.send(embed=embed)
@@ -146,7 +146,9 @@ async def on_message(message):
                 **\n Pick maps when joined into server**''', color=0x33ff00)
                 embed.set_footer(text="Server is now loading. Please wait about 20 seconds for server to start!", icon_url="https://cdn.dribbble.com/users/46633/screenshots/1185889/civchoice-loading-gifs800x600.gif")
                 deleteAll = await message.channel.send(embed=embed)
+                #starts dathost server
                 await dathost.start(myToken.serverId)
+                #waits 5minutes then deletes all the messages in the channel after the teams are picked
                 await asyncio.sleep(300)
                 await deleteAll.channel.purge(limit=100)
                 embed = discord.Embed(description="**Join `🔊Lobby` and  `.r` in `💥ready-room💥` to ready up!**", color=0xb603fc)
@@ -164,7 +166,6 @@ async def on_message(message):
             else:
                 embed = discord.Embed(description="🔵" + firstCaptain.mention + " **please pick again from \n**" + " \n ".join(str(x.mention) for x in readyUsers), color=0x03f0fc)
                 await message.channel.send(embed=embed)
-
         #similar to above, just for team 2 and captain 2
         elif author == secondCaptain and (pickNum == 2 or pickNum == 3 or pickNum == 5 or pickNum == 7):
             #get the user they picked
