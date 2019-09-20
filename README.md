@@ -4,7 +4,11 @@ Simple Discord 10man bot that picks teams and moves them into their voicechannel
 Create the following channels `🔊Lobby` `🔵CT` `🔴T` `💥ready-room💥`. 
 
 ![Image of config](https://scontent.fsyd6-1.fna.fbcdn.net/v/l/t1.15752-9/70760526_1170460396479105_8676906833635442688_n.png?_nc_cat=104&_nc_oc=AQmsJ1yyadmYmYeklEscRVtkcH6MUsoFT9J9DlFdJo8_gjCy2rLC8OIAxO2fjHsjicA&_nc_ht=scontent.fsyd6-1.fna&oh=7b7abbbea59b278603e72fe4d3013a20&oe=5DF6D77A)
+
+
 ![Image of config](https://scontent.fsyd6-1.fna.fbcdn.net/v/t1.15752-9/71237788_726140337809734_56500397858095104_n.jpg?_nc_cat=103&_nc_oc=AQmyD8rtk2OYalQ-RAqb7ouoxN6_lLBUb_8wzkp3CT9JRQ5Sh_CvbLj5Dd15BYerSuk&_nc_ht=scontent.fsyd6-1.fna&oh=9be849eb2e621d8b5e044e77ab6d612a&oe=5E37EF9E) 
+
+
 ![Image of config](https://scontent.fsyd6-1.fna.fbcdn.net/v/t1.15752-9/71113884_798798853920162_3574141495898275840_n.jpg?_nc_cat=102&_nc_oc=AQmGFu977SfnFmd3GQmsf5DZouAheqcXl5GnxXPTH2kRG6pWmoTJB-F1tJmOF8iSKUU&_nc_ht=scontent.fsyd6-1.fna&oh=8ec45a8389acd802d184275bfd298f48&oe=5DF710A9)
 
 Make sure you are in developer mode in discord. Copy id of each channel and paste it into the myToken.py config file.
