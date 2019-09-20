@@ -19,7 +19,7 @@ Make sure you are in developer mode in discord. Copy id of each channel and past
 1. Join `🔊Lobby voicechannel`
 2. `.r` in `💥ready-room💥`
 3. When 10 players `.r`, the bot will then select 2 random captains and place them into `🔵CT`and `🔴T` voicechannels.
-4. Captains will use the `.pick @user` command to pick players from the lobby. The picked players will automatically be moved to their teams voicechannels.
+4. Captains will use the `.pick @user` command to pick players from the lobby. The picked players will automatically be moved to their teams voicechannels by the bot.
 5. Once teams are picked. The bot will start the server and give the ip to join. 
 6. When the live match has been completed use the command `.stop` to stop the server and restart the 10man. 
 
