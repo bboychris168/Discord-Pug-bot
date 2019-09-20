@@ -178,9 +178,9 @@ async def on_message(message):
                 #await asyncio.sleep(2)
 
                 embed = discord.Embed(description="**📡CONSOLE CONNECT:** \n `connect 139.99.144.30:28448; password t27D9M`\n\n **📺GOTV:** \n `connect 139.99.144.30:28449; password t27D9M`\n", color=0x33ff00)
-                embed.add_field(name="**🔵CT**\n", value=''' \n ''' + firstCaptain.mention + "\n" + " \n ".join(sorted(str(x.mention) for x in teamOne)) + ''' ''', inline=True)
+                embed.add_field(name="**🔵CT**\n", value=''' \n ''' + "👑" + firstCaptain.mention + "\n" + " \n ".join(sorted(str(x.mention) for x in teamOne)) + ''' ''', inline=True)
                 embed.add_field(name="**Maps** \n", value="1⃣ - Mirage \n 2⃣ - Cache \n 3⃣ - Cobblestone \n 4⃣ - Inferno \n 5⃣ - Train \n 6⃣ - Nuke \n 7⃣ - Overpass \n 8⃣ - Dust 2", inline=True)
-                embed.add_field(name="**🔴T** \n", value=''' \n ''' + secondCaptain.mention + "\n" + " \n ".join(sorted(str(x.mention) for x in teamTwo)) + ''' ''', inline=True) 
+                embed.add_field(name="**🔴T** \n", value=''' \n ''' + "👑" +  secondCaptain.mention + "\n" + " \n ".join(sorted(str(x.mention) for x in teamTwo)) + ''' ''', inline=True) 
                 embed.set_footer(text="Server has now started!", icon_url="https://cdn.dribbble.com/users/46633/screenshots/1185889/civchoice-loading-gifs800x600.gif")
                 sent = await message.channel.send(content=None, embed=embed)
                 await message.channel.send("@everyone")
