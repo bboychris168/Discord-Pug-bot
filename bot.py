@@ -22,7 +22,7 @@ team2VoiceChannel = None
 serverName = myToken.guildID
 
 #dathost = dathost(username=myToken.datHostUser, password=myToken.datHostPass)
-dathost = dathost(username="chris.168@live.com.au", password="clear123", route = "https://dathost.net/api/0.1")
+dathost = dathost(username="", password="", route = "https://dathost.net/api/0.1")
 
 @client.event
 async def on_ready():
