@@ -22,7 +22,7 @@ team2VoiceChannel = None
 serverName = myToken.guildID
 
 #dathost = dathost(username=myToken.datHostUser, password=myToken.datHostPass)
-dathost = dathost(username="", password="", route = "https://dathost.net/api/0.1")
+dathost = dathost(username="chris.168@live.com.au", password="clear123", route = "https://dathost.net/api/0.1")
 
 @client.event
 async def on_ready():
@@ -68,19 +68,19 @@ async def on_message(message):
     if (message.channel.name != "💥ready-room💥" and message.content.lower() == ".stop"):
         embed = discord.Embed(description="**Please use the**" "💥ready-room💥" "**channel!**", color=0x03f0fc)
         await message.channel.send(embed=embed)
-        await message.delete(delay=0) 
+        await message.delete(delay=0)
         return
 
     if (message.content.lower() == "!retakes" or message.content.lower() == "!retake" or message.content.lower() == ".retakes" or message.content.lower() == ".retake"):
-        embed = discord.Embed(color=0xff9e0d)
+        embed = discord.Embed(description="__**|ADDIX.GG| RETAKES #1| WS/KNIFE/GLOVES| 128TICK|**__", color=0xff9e0d)
         embed.set_footer(text="Retake server is now loading. Please wait about 20 seconds for server to start!", icon_url="https://cdn.dribbble.com/users/46633/screenshots/1185889/civchoice-loading-gifs800x600.gif")
         await message.channel.send(delete_after=20, embed=embed)
         await message.delete(delay=0)
         await dathost.start(myToken.retakeId)
-        await asyncio.sleep(18)
-        embed = discord.Embed(description="**Console connect:** \n `connect 139.99.144.30:28023` \n\n **Server commands:** \n `!ws`  `!knife`  `!gloves`", color=0xff9e0d)
+        await asyncio.sleep(10)
+        embed = discord.Embed(description="__**|ADDIX.GG| RETAKES #1| WS/KNIFE/GLOVES| 128TICK|**__ \n\n " "**Console connect:** \n `connect 139.99.144.30:28023` \n\n **Server commands:** \n `!ws`  `!knife`  `!gloves`", color=0xff9e0d)
         embed.set_footer(text="Retake server has now started!", icon_url="https://cdn.dribbble.com/users/46633/screenshots/1185889/civchoice-loading-gifs800x600.gif")
-        await message.channel.send("@everyone", delete_after=1800, embed=embed)
+        await message.channel.send("@everyone",delete_after=3600, embed=embed)
 
     #ready command
     if (message.content == '.ready' or message.content.lower() == '.r') and inProgress == False and len(readyUsers) < 10:        
@@ -96,19 +96,21 @@ async def on_message(message):
         else:
             #add them to the ready list and send a message
             readyUsers.append(author)
-            if(len(readyUsers) == 8 or len(readyUsers) == 9):
+            if(len(readyUsers) == 9): #or len(readyUsers) == 9):
                 embed = discord.Embed(description="<@&" + str(myToken.csRoleID) + ">" + " **we only need** " + str(10 - len(readyUsers)) + " `.r` **to join**", color=0x03f0fc)
-                await message.channel.send(delete_after=5, embed=embed)
+                await message.channel.send("@everyone", embed=embed)
                 await message.delete(delay=0)
+
                 embedReadied = discord.Embed(description="__**Readied Players:**__ \n" + " \n ".join(sorted(str(x.mention) for x in readyUsers)), color=0xebe534)
-                await message.channel.send(delete_after=0, embed=embed)
+                await message.channel.send(embed=embedReadied)
                 return          
 
             elif(len(readyUsers) == 10):
                 #we have 10 ready users, now need captains
                 embed = discord.Embed(description="**Picking Captains...**", color=0x03f0fc)
-                await message.channel.send(embed=embed)
+                sent = await message.channel.send(embed=embed)
                 await asyncio.sleep(3)
+                await sent.channel.purge(limit=100)
                 
                 inProgress = True
                 firstCaptain = readyUsers[random.randrange(len(readyUsers))]
@@ -124,22 +126,26 @@ async def on_message(message):
 
                 embed = discord.Embed(color=0x03f0fc)
                 embed.add_field(name="**🔵CT**\n", value=firstCaptain.mention + "👑", inline=True)
-                embed.add_field(name="**1Players** \n", value=" \n ".join(str(x.name) for x in readyUsers), inline=True)
+                embed.add_field(name="**Players** \n", value=" \n ".join(str(x.name) for x in readyUsers), inline=True)
                 embed.add_field(name="**🔴T** \n", value="`Please pick player`\n" + secondCaptain.mention + "👑", inline=True) 
                 embed.set_footer(text=".pick @user to pick player", icon_url="https://i.imgur.com/gVX3yPJ.gif")
-                await message.channel.send(secondCaptain.mention + "👑", embed=embed)
+                await message.channel.send(secondCaptain.mention + "👑 `.pick @user`", embed=embed)
                 await message.delete(delay=0)
 
             elif(len(readyUsers) != 0):
                 embed = discord.Embed(description=author.mention + "**is now ready, we need **" + str(10 - len(readyUsers)) + " **more**", color=0x03f0fc)
-                await message.channel.send(delete_after=5, embed=embed)
+                await message.channel.send(embed=embed)
                 await message.delete(delay=0)
 
             return
 
     #pick command
     elif (message.content.lower().startswith('.pick') and inProgress == True and pickNum < 9):
+        embed = discord.Embed(description="**Player is now picked**", color=0x03f0fc)
+        sent = await message.channel.send(delete_after=1, embed=embed)
         await message.delete(delay=0)
+        await sent.channel.purge(limit=100)
+
         #make sure a captain is picking, and its his turn
         if author == firstCaptain and (pickNum == 2 or pickNum == 4 or pickNum == 6 or pickNum == 8):
             #get the user they picked
@@ -174,7 +180,7 @@ async def on_message(message):
                 await message.channel.send(delete_after=20, embed=embed)
                 #starts dathost server
                 await dathost.start(myToken.serverId)
-                await asyncio.sleep(18)
+                await asyncio.sleep(10)
                 embed = discord.Embed(description="**📡CONSOLE CONNECT:** \n `connect 139.99.144.30:28448; password t27D9M`\n\n **📺GOTV:** \n `connect 139.99.144.30:28449; password t27D9M`\n", color=0x33ff00)
                 embed.add_field(name="**🔵CT**\n", value=''' \n ''' + firstCaptain.mention + "👑" + "\n" + " \n ".join(sorted(str(x.mention) for x in teamOne)) + ''' ''', inline=True)
                 embed.add_field(name="**Maps** \n", value="1⃣ - Mirage \n 2⃣ - Cache \n 3⃣ - Cobblestone \n 4⃣ - Inferno \n 5⃣ - Train \n 6⃣ - Nuke \n 7⃣ - Overpass \n 8⃣ - Dust 2", inline=True)
@@ -210,17 +216,17 @@ async def on_message(message):
             if(pickNum == 1 or pickNum == 3 or pickNum == 5 or pickNum == 7):
                 embed = discord.Embed(color=0x03f0fc)
                 embed.add_field(name="**🔵CT**\n", value=firstCaptain.mention + "👑" + " \n " + " \n ".join(str(x.mention) for x in teamOne), inline=True)
-                embed.add_field(name="**2Players** \n", value=" \n ".join(str(x.name) for x in readyUsers), inline=True)
+                embed.add_field(name="**Players** \n", value=" \n ".join(str(x.name) for x in readyUsers), inline=True)
                 embed.add_field(name="**🔴T** \n", value="`Please pick player`\n" + secondCaptain.mention + "👑" + " \n " + " \n ".join(str(x.mention) for x in teamTwo), inline=True) 
                 embed.set_footer(text=".pick @user to pick player", icon_url="https://i.imgur.com/gVX3yPJ.gif")
-                await message.channel.send(secondCaptain.mention + "👑", embed=embed)
+                await message.channel.send(secondCaptain.mention + "👑 `.pick @user`", embed=embed)
             else:
                 embed = discord.Embed(color=0x03f0fc)
                 embed.add_field(name="**🔵CT**\n", value="`Please pick player`\n" + firstCaptain.mention + "👑" + " \n " + " \n ".join(str(x.mention) for x in teamOne), inline=True)
                 embed.add_field(name="**Players** \n", value=" \n ".join(str(x.name) for x in readyUsers), inline=True)
                 embed.add_field(name="**🔴T** \n", value=secondCaptain.mention + "👑" + " \n " + " \n ".join(str(x.mention) for x in teamTwo), inline=True) 
                 embed.set_footer(text=".pick @user to pick player", icon_url="https://i.imgur.com/gVX3yPJ.gif")
-                await message.channel.send(firstCaptain.mention + "👑", embed=embed)
+                await message.channel.send(firstCaptain.mention + "👑 `.pick @user`", embed=embed)
 
         #similar to above, just for team 2 and captain 2
         elif author == secondCaptain and (pickNum == 1 or pickNum == 3 or pickNum == 5 or pickNum == 7):
@@ -243,17 +249,17 @@ async def on_message(message):
             if(pickNum == 2 or pickNum == 4 or pickNum == 6 or pickNum == 8):
                 embed = discord.Embed(color=0x03f0fc)
                 embed.add_field(name="**🔵CT**\n", value="`Please pick player`\n" + firstCaptain.mention + "👑" + " \n " + " \n ".join(str(x.mention) for x in teamOne), inline=True)
-                embed.add_field(name="**4Players** \n", value=" \n ".join(str(x.name) for x in readyUsers), inline=True)
+                embed.add_field(name="**Players** \n", value=" \n ".join(str(x.name) for x in readyUsers), inline=True)
                 embed.add_field(name="**🔴T** \n", value=secondCaptain.mention + "👑" + " \n " + " \n ".join(str(x.mention) for x in teamTwo), inline=True) 
                 embed.set_footer(text=".pick @user to pick player", icon_url="https://i.imgur.com/gVX3yPJ.gif")
-                await message.channel.send(firstCaptain.mention + "👑", embed=embed)
+                await message.channel.send(firstCaptain.mention + "👑 `.pick @user`", embed=embed)
             else:
                 embed = discord.Embed(color=0x03f0fc)
                 embed.add_field(name="**🔵CT**\n", value=firstCaptain.mention + "👑" + " \n " + " \n ".join(str(x.mention) for x in teamOne), inline=True)
                 embed.add_field(name="**Players** \n", value=" \n ".join(str(x.name) for x in readyUsers), inline=True)
                 embed.add_field(name="**🔴T** \n", value="`Please pick player`\n" + secondCaptain.mention + "👑" + " \n " + " \n ".join(str(x.mention) for x in teamTwo), inline=True) 
                 embed.set_footer(text=".pick @user to pick player", icon_url="https://i.imgur.com/gVX3yPJ.gif")
-                await message.channel.send(secondCaptain.mention + "👑", embed=embed)
+                await message.channel.send(secondCaptain.mention + "👑 `.pick @user`", embed=embed)
         else:
             embed = discord.Embed(description="You're not a captain, sorry, but please let the captains select!", color=0xff0000)
             await message.channel.send(embed=embed)
@@ -274,6 +280,7 @@ async def on_message(message):
     
     #stopping one        
     elif message.content.lower() == '.stop':
+
         inProgress = False
         readyUsers = []
         firstCaptain = None
@@ -281,7 +288,7 @@ async def on_message(message):
         pickNum = 1
         teamOne.clear()
         teamTwo.clear()
-
+        
         embed = discord.Embed(description="**Current 10man finished, need** 10 **readied players**", color=0xff0000)
         embed.set_footer(text="Server is shutting down", icon_url="https://i.imgur.com/EXemST2.gif")
         deleteAll = await message.channel.send(embed=embed)
@@ -305,5 +312,11 @@ async def on_message(message):
             await message.channel.send(embed=embed)  
             await message.delete(delay=0)  
             return
+
+    #deletes all messages except for commands for 10man.
+    if (message.author.bot):
+        return
+    if (message.content.lower() != ".r" and message.channel.name == "💥ready-room💥"):
+        await message.delete(delay=0)
 
 client.run(myToken.token)
