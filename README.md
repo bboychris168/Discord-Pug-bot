@@ -1,3 +1,5 @@
+Project currently not mantained. A new version will be in the works. 
+
 # Discord-Pug-bot
 Simple Discord 10man bot that picks teams and moves them into their voicechannels
 
